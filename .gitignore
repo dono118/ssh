@@ -5,6 +5,7 @@ target/
 .classpath
 .project
 .settings
+.metadata
 .svn
 
 # Compiled class file
