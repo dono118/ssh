@@ -8,6 +8,7 @@ package cn.itcast.oa.domain;
  */
 public class Reply extends Article {
 
+	private static final long serialVersionUID = 1L;
 	private Topic topic; // 所属的主题
 
 	public Topic getTopic() {

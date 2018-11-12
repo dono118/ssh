@@ -16,6 +16,7 @@ import cn.itcast.oa.domain.Role;
 @Scope("prototype")
 public class RoleAction extends BaseAction<Role> {
 	
+	private static final long serialVersionUID = 1L;
 	private Long[] privilegeIds;
 
 	/** 列表 */

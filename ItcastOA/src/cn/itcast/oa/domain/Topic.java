@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public class Topic extends Article {
 
+	private static final long serialVersionUID = 1L;
+
 	/** 普通帖 */
 	public static final int TYPE_NORMAL = 0;
 

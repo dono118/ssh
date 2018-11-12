@@ -10,6 +10,8 @@ import java.util.Set;
  * @version 1.0v
  */
 public class Role implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String description;

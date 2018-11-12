@@ -10,6 +10,8 @@ import java.util.Set;
  * @version 1.0v
  */
 public class Department implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Set<User> users = new HashSet<User>();
 	private Department parent;

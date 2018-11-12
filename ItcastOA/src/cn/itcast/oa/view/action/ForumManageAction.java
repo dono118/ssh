@@ -14,6 +14,8 @@ import cn.itcast.oa.domain.Forum;
 @Scope("prototype")
 public class ForumManageAction extends BaseAction<Forum> {
 
+	private static final long serialVersionUID = 1L;
+
 	/** 列表 */
 	public String list() throws Exception {
 		List<Forum> forumList = forumService.findAll();

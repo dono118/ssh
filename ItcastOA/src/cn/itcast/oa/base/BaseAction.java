@@ -4,9 +4,11 @@ import java.lang.reflect.ParameterizedType;
 
 import javax.annotation.Resource;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import cn.itcast.oa.domain.User;
 import cn.itcast.oa.service.DepartmentService;
 import cn.itcast.oa.service.ForumService;
 import cn.itcast.oa.service.PrivilegeService;
@@ -17,6 +19,7 @@ import cn.itcast.oa.service.UserService;
 
 public abstract class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 
+	private static final long serialVersionUID = 1L;
 	// ========== ModelDriven的支持 ============
 	protected T model;
 	
@@ -54,4 +57,12 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 	@Resource
 	protected ReplyService replyService;
 	
+	/**
+	 * 获取当前登录的用户
+	 * 
+	 * @return
+	 */
+	protected User getCurrentUser() {
+		return (User) ActionContext.getContext().getSession().get("user");
+	}
 }

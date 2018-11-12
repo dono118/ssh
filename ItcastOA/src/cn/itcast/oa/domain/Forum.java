@@ -1,5 +1,6 @@
 package cn.itcast.oa.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +10,9 @@ import java.util.Set;
  * @author Leo
  * @version 1.0v
  */
-public class Forum {
+public class Forum implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String description;

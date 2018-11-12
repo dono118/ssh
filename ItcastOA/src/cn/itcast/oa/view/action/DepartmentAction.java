@@ -15,6 +15,7 @@ import cn.itcast.oa.util.DepartmentUtils;
 @Scope("prototype")
 public class DepartmentAction extends BaseAction<Department> {
 
+	private static final long serialVersionUID = 1L;
 	private Long parentId;
 	
 	/** 列表 */

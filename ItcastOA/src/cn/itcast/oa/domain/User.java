@@ -13,6 +13,8 @@ import com.opensymphony.xwork2.ActionContext;
  * @version 1.0v
  */
 public class User implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Department department;
 	private Set<Role> roles = new HashSet<Role>();

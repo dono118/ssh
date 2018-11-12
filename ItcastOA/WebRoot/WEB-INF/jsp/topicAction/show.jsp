@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<title>查看主题：${topic.title}</title>
@@ -118,7 +119,7 @@
 
 
 			<!-- ~~~~~~~~~~~~~~~ 显示回复列表 ~~~~~~~~~~~~~~~ -->
-			<s:iterator value="#replyList" status="status">
+			<s:iterator value="recordList" status="status">
 			<div class="ListArea template">
 				<table border="0" cellpadding="0" cellspacing="1" width="100%">
 					<tr>
@@ -171,36 +172,45 @@
 		<!--分页信息-->
 		<div id=PageSelectorBar>
 			<div id=PageSelectorMemo>
-				页次：7/13页 &nbsp;
-				每页显示：30条 &nbsp;
-				总记录数：385条
+				页次：${currentPage}/${pageCount}页 &nbsp;
+				每页显示：${pageSize}条 &nbsp;
+				总记录数：${recordCount}条
 			</div>
 			<div id=PageSelectorSelectorArea>
 			
-				<a href="javascript:void(0)" title="首页" style="cursor: hand;">
+				<a href="javascript: gotoPage(1)" title="首页" style="cursor: hand;">
 					<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/firstPage.png"/>
 				</a>
 				
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">3</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">4</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">5</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">6</span>
-				<span class="PageSelectorNum PageSelectorSelected">7</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">8</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">9</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">10</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">11</span>
-				<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">12</span>
+				<s:iterator begin="%{beginPageIndex}" end="%{endPageIndex}" var="num">
+					<%-- 当前页 --%>
+					<s:if test="#num == currentPage">
+						<span class="PageSelectorNum pageSelectorSelected">${num}</span>
+					</s:if>
+					<%-- 非当前页 --%>
+					<s:else>
+						<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(${num});">${num}</span>
+					</s:else>
+				</s:iterator>
 				
-				<a href="#" title="尾页" style="cursor: hand;">
+				<a href="javascript: gotoPage($(pageCount))" title="尾页" style="cursor: hand;">
 					<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/lastPage.png"/>
 				</a>
 				
 				转到：
-				<input onFocus="this.select();" maxlength="3" class="inputStyle" type="text" value="1" id="pn"/>
-				<input type="submit" value="Go" class="MiddleButtonStyle" />
+				<select onchange="gotoPage(this.value)">
+					<s:iterator begin="1" end="%{pageCount}" var="num">
+						<option value="${num}">${num}</option>
+					</s:iterator>
+				</select>
 			</div>
 		</div>
+		
+		<script type="text/javascript">
+			function gotoPage(pageNum) {
+				window.location.href = "topic_show.action?id=${id}&pageNum=" + pageNum;
+			}
+		</script>
 
 		<div class="ForumPageTableBorder" style="margin-top: 25px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">

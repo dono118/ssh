@@ -1,5 +1,6 @@
 package cn.itcast.oa.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,9 @@ import java.util.Date;
  * @author Leo
  * @version 1.0v
  */
-public class Article {
+public class Article implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String title; // 标题
 	private String content;// 内容

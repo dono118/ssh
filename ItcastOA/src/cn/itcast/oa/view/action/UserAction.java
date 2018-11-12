@@ -19,6 +19,7 @@ import cn.itcast.oa.util.DepartmentUtils;
 @Scope("prototype")
 public class UserAction extends BaseAction<User> {
 
+	private static final long serialVersionUID = 1L;
 	private Long deptId;
 	private Long[] roleIds;
 

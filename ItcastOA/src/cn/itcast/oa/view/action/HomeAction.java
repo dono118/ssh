@@ -9,6 +9,8 @@ import com.opensymphony.xwork2.ActionSupport;
 @Scope("prototype")
 public class HomeAction extends ActionSupport {
 
+	private static final long serialVersionUID = 1L;
+
 	public String index() throws Exception {
 		return "index";
 	}
