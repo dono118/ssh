@@ -5,13 +5,13 @@
 	<title>查看主题：${topic.title}</title>
     <%@ include file="/WEB-INF/jsp/public/commons.jspf" %>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/style/blue/forum.css" />
-	<script language="javascript" src="${pageContext.request.contextPath}/script/fckeditor/fckeditor.js" charset="utf-8"></script>
+	<script language="javascript" src="${pageContext.request.contextPath}/fckeditor/fckeditor.js" charset="utf-8"></script>
     <script type="text/javascript">
 		$(function(){
 			var fck = new FCKeditor("content");
 			fck.Width = "90%";
 			fck.ToolbarSet = "bbs";
-			fck.BasePath = "${pageContext.request.contextPath}/script/fckeditor/";
+			fck.BasePath = "${pageContext.request.contextPath}/fckeditor/";
 			fck.ReplaceTextarea();
 		});
     </script>
@@ -70,6 +70,7 @@
 			</table>
 
 			<!-- ~~~~~~~~~~~~~~~ 显示主帖（主帖只在第1页显示） ~~~~~~~~~~~~~~~ -->
+			<s:if test="currentPage == 1">
 			<div class="ListArea">
 				<table border="0" cellpadding="0" cellspacing="1" width="100%">
 					<tr>
@@ -115,6 +116,7 @@
 					</tr>
 				</table>
 			</div>
+			</s:if>
 			<!-- ~~~~~~~~~~~~~~~ 显示主帖结束 ~~~~~~~~~~~~~~~ -->
 
 
@@ -154,7 +156,7 @@
 					<tr><!--显示楼层等信息-->
 						<td class="Footer" height="28" align="center" valign="bottom">
 							<ul style="margin: 0px; width: 98%;">
-								<li style="float: left; line-height:18px;"><font color=#C30000>[${status.count}楼]</font>
+								<li style="float: left; line-height:18px;"><font color=#C30000>[${(currentPage -1) * pageSize + status.count}楼]</font>
 									${postTime}
 								</li>
 								<li style="float: right;"><a href="javascript:scroll(0,0)">
@@ -170,47 +172,8 @@
 		</div>
 
 		<!--分页信息-->
-		<div id=PageSelectorBar>
-			<div id=PageSelectorMemo>
-				页次：${currentPage}/${pageCount}页 &nbsp;
-				每页显示：${pageSize}条 &nbsp;
-				总记录数：${recordCount}条
-			</div>
-			<div id=PageSelectorSelectorArea>
-			
-				<a href="javascript: gotoPage(1)" title="首页" style="cursor: hand;">
-					<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/firstPage.png"/>
-				</a>
-				
-				<s:iterator begin="%{beginPageIndex}" end="%{endPageIndex}" var="num">
-					<%-- 当前页 --%>
-					<s:if test="#num == currentPage">
-						<span class="PageSelectorNum pageSelectorSelected">${num}</span>
-					</s:if>
-					<%-- 非当前页 --%>
-					<s:else>
-						<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(${num});">${num}</span>
-					</s:else>
-				</s:iterator>
-				
-				<a href="javascript: gotoPage($(pageCount))" title="尾页" style="cursor: hand;">
-					<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/lastPage.png"/>
-				</a>
-				
-				转到：
-				<select onchange="gotoPage(this.value)">
-					<s:iterator begin="1" end="%{pageCount}" var="num">
-						<option value="${num}">${num}</option>
-					</s:iterator>
-				</select>
-			</div>
-		</div>
-		
-		<script type="text/javascript">
-			function gotoPage(pageNum) {
-				window.location.href = "topic_show.action?id=${id}&pageNum=" + pageNum;
-			}
-		</script>
+		<%@ include file="/WEB-INF/jsp/public/pageView.jspf"%>
+		<s:form action="topic_show?id=%{id}"></s:form>
 
 		<div class="ForumPageTableBorder" style="margin-top: 25px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">

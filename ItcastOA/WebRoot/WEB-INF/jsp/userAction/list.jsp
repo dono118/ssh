@@ -1,3 +1,4 @@
+<%@page import="org.apache.struts2.components.Include"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <html>
 <head>
@@ -34,7 +35,7 @@
         <!--显示数据列表-->
         <tbody id="TableData" class="dataContainer" datakey="userList">
         
-        <s:iterator value="#userList">
+        <s:iterator value="recordList">
             <tr class="TableDetail1 template">
                 <td>${loginName}&nbsp;</td>
                 <td>${name}&nbsp;</td>
@@ -63,6 +64,11 @@
         </div>
     </div>
 </div>
+
+<!-- 分页信息 -->
+<%@ include file="/WEB-INF/jsp/public/pageView.jspf"%>
+<s:form action="user_list"></s:form>
+
 
 </body>
 </html>

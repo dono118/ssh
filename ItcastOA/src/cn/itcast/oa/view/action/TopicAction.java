@@ -1,5 +1,6 @@
 package cn.itcast.oa.view.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import com.opensymphony.xwork2.ActionContext;
 import cn.itcast.oa.base.BaseAction;
 import cn.itcast.oa.domain.Forum;
 import cn.itcast.oa.domain.PageBean;
-import cn.itcast.oa.domain.Reply;
 import cn.itcast.oa.domain.Topic;
 
 @Controller
@@ -22,9 +22,6 @@ public class TopicAction extends BaseAction<Topic> {
 	private static final long serialVersionUID = 1L;
 	private Long forumId;
 	
-	private int pageNum = 1; // 当前页
-	private int pageSize = 10; // 每页显示记录数
-
 	/** 显示单个主题(主题+回帖列表) */
 	public String show() throws Exception {
 		// 准备数据：topic
@@ -35,8 +32,15 @@ public class TopicAction extends BaseAction<Topic> {
 //		List<Reply> replyList = replyService.findByTopic(topic);
 //		ActionContext.getContext().put("replyList", replyList);
 		
-		// 准备分页信息
-		PageBean pageBean = replyService.getPageBeanByTopic(pageNum, pageSize, topic);
+		// 准备分页信息v1
+//		PageBean pageBean = replyService.getPageBeanByTopic(pageNum, pageSize, topic);
+//		ActionContext.getContext().getValueStack().push(pageBean);
+		
+		// 准备分页信息v2
+		String hql = "FROM Reply r WHERE r.topic=? ORDER BY r.postTime ASC";
+		List<Object> params = new ArrayList<Object>();
+		params.add(topic);
+		PageBean pageBean = topicService.getPageBean(pageNum, pageSize, hql, params);
 		ActionContext.getContext().getValueStack().push(pageBean);
 				
 		return "show";
@@ -78,5 +82,6 @@ public class TopicAction extends BaseAction<Topic> {
 	public void setForumId(Long forumId) {
 		this.forumId = forumId;
 	}
+	
 	
 }

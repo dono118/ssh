@@ -23,4 +23,15 @@ public class TestService {
 //		int a = 1 / 0;// 这行会抛异常
 		session.save(new User());
 	}
+	
+	@Transactional
+	public void saveManyUsers() {
+		Session session = sessionFactory.getCurrentSession();
+		
+		for (int i = 0; i < 25; i++) {
+			User user = new User();
+			user.setName("test_" + ('A' + i));
+			session.save(user);
+		}
+	}
 }

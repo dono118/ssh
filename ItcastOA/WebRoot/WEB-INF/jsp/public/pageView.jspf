@@ -1,0 +1,46 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<div id=PageSelectorBar>
+	<div id=PageSelectorMemo>
+		页次：${currentPage}/${pageCount}页 &nbsp;
+		每页显示：${pageSize}条 &nbsp;
+		总记录数：${recordCount}条
+	</div>
+	<div id=PageSelectorSelectorArea>
+	
+		<a href="javascript: gotoPage(1)" title="首页" >
+			<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/firstPage.png"/>
+		</a>
+		
+		<s:iterator begin="%{beginPageIndex}" end="%{endPageIndex}" var="num">
+			<%-- 当前页 --%>
+			<s:if test="#num == currentPage">
+				<a class="PageSelectorNum PageSelectorSelected">${num}</a>
+			</s:if>
+			<%-- 非当前页 --%>
+			<s:else>
+				<a class="PageSelectorNum" style="cursor: pointer;" onClick="gotoPage(${num});">${num}</a>
+			</s:else>
+		</s:iterator>
+		
+		<a href="javascript: gotoPage(${pageCount})" title="尾页" >
+			<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/lastPage.png"/>
+		</a>
+		
+		转到：
+		<select onchange="gotoPage(this.value)" id="_pn">
+			<s:iterator begin="1" end="%{pageCount}" var="num">
+				<option value="${num}">${num}</option>
+			</s:iterator>
+		</select>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#_pn").val("${currentPage}");
+	function gotoPage(pageNum) {
+		// window.location.href = "forum_show.action?id=${id}&pageNum=" + pageNum;
+		$(document.forms[0]).append("<input type='hidden' name='pageNum' value='" + pageNum + "'>");
+		document.forms[0].submit();
+	}
+</script>

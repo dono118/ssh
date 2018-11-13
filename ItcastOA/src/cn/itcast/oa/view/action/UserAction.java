@@ -14,6 +14,7 @@ import cn.itcast.oa.domain.Department;
 import cn.itcast.oa.domain.Role;
 import cn.itcast.oa.domain.User;
 import cn.itcast.oa.util.DepartmentUtils;
+import cn.itcast.oa.util.QueryHelper;
 
 @Controller
 @Scope("prototype")
@@ -25,8 +26,12 @@ public class UserAction extends BaseAction<User> {
 
 	/** 列表 */
 	public String list() throws Exception {
-		List<User> userList = userService.findAll();
-		ActionContext.getContext().put("userList", userList);
+//		List<User> userList = userService.findAll();
+//		ActionContext.getContext().put("userList", userList);
+		
+		// 准备分页信息
+		new QueryHelper(User.class, "u").preparePageBean(userService, pageNum, pageSize);
+		
 		return "list";
 	}
 

@@ -45,21 +45,21 @@ public class ReplyServiceImpl extends DaoSupportImpl<Reply> implements ReplyServ
 
 	@Override
 	public PageBean getPageBeanByTopic(int pageNum, int pageSize, Topic topic) {
-		// 查询列表
-		List List = getSession().createQuery(//
+		// 查询本页的数据列表
+		List list = getSession().createQuery(//
 				"FROM Reply r WHERE r.topic=? ORDER BY r.postTime ASC")//
 				.setParameter(0, topic)//
-				.setFirstResult((pageNum - 1) * pageSize)
-				.setMaxResults(pageSize)
+				.setFirstResult((pageNum - 1) * pageSize)//
+				.setMaxResults(pageSize)//
 				.list();
 		
-		// 查询总数量
+		// 查询总记录数量
 		Long count = (Long) getSession().createQuery(//
 				"SELECT COUNT(*) FROM Reply r WHERE r.topic=?")//
 				.setParameter(0, topic)//
 				.uniqueResult();
 		
-		return new PageBean(pageNum, pageSize, count.intValue(), List);
+		return new PageBean(pageNum, pageSize, count.intValue(), list);
 	}
-	
+
 }
